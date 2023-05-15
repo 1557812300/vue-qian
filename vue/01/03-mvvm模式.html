@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <h2 @click="count++">{{count}}</h2>
+    <h2 @click="change">{{user.username}} --- {{user.age}} </h2>
+  </div>
+
+  <!--引入线上的vue地址-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.8/vue.js"></script>
+  <script>
+    /*
+      mvc 与 mvvm的关系：
+        mvc: model与view层是有关系的，当m层一旦改变了，view需要通过观察者模式去更改界面
+        mvvm: viewModel将m/v进行了双向的数据绑定， view  <----->  viewModel  <------> model
+
+      面试题；
+        为什么到model层的数据更改了，viewModel内部却知道数据改变了？
+        vue2的双向数据绑定的原理？
+
+        vue在创建vm的时候，会将数据配置到vue实例中，内部借助了Object.defineProperty的方法，为数据动态的添加了get/set方法
+        当我们获取数据的时候，会触发get
+        当我们修改数据的时候，触发对应的set方法，当数据修改完毕的时候，内部进一步触发watcher，进行虚拟dom的对比，更新真实dom结构
+    */
+
+
+     // 测试vue2的缺陷：
+      const vm = new Vue({
+        el:'#app',
+        data:{
+          count:1,
+          user:{
+            username:'张三'
+          }
+        },
+        methods:{
+          change(){
+            // 更改之前存在的响应式属性username
+            // this.user.username = '李四'
+            
+            // 给对象添加新的属性age
+            // this.user.age = 18
+            // this.$set(this.user,'age',18)
+            // Vue.set(this.user,'age',18)
+
+
+            // 删除对象的属性username
+            // delete this.user.username
+            // this.$delete(this.user,'username')
+            Vue.delete(this.user,'username')
+            console.log(this.user)
+          }
+        }
+      })
+
+      
+
+
+
+
+      // let json = {count:1}
+      // const vm = new Vue({
+      //   el:'#app',
+      //   data:json  // data:{count:1}
+      // })
+      // console.log(json)
+
+
+      
+      // vue2中的底层原理：通过Object.defineProperty这个方法对于对象的属性进行拦截的！
+      // 给对象进行动态添加属性、删除属性都是拦截不到的 ---> vue2的缺陷
+
+      // let json = {}
+      // let middle = 1
+      // Object.defineProperty(json,'count',{
+      //   get(){
+      //     console.log('get方法调用了哦....')
+      //     return middle
+      //   },
+      //   set(val){
+      //     console.log('set方法调用了哦.....')
+      //     middle = val
+      //   }
+      // })
+      // console.log(json.count) // 获取对象的count属性的时候，就会触发对象内部的get方法
+      // json.count = 10  // 修改对象的count属性的时候，就会触发对象内部的set方法
+      // console.log(json.count)
+      // json.a = '添加了a属性'
+      // delete json.count
+      // console.log('json--->',json)
+  </script>
+</body>
+</html>

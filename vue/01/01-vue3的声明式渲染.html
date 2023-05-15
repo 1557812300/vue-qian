@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <button @click="count++">{{ count }}</button>
+  </div>
+
+  <!-- // clone地址： git clone https://gitee.com/jiahuajiaoyu/2301-all.git -->
+  <!--引入线上的vue地址-->
+  <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    // vuejs的核心是一个允许采用简洁的模板语法（插值语法{{变量}}）将数据渲染到dom系统里面去
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          count:0
+        }
+      },
+      mounted(){ // dom挂载完毕后，就会执行这个mounted生命周期函数
+        console.log(this.count)
+      } 
+    })
+    app.mount('#app')
+    // console.log('app-------->',Vue)
+  </script>
+</body>
+</html>

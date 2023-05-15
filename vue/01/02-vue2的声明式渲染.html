@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    {{ count }}
+  </div>
+
+  <!--引入线上的vue地址-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.8/vue.js"></script>
+  <script>
+    // vuejs的核心是一个允许采用简洁的模板语法（插值语法{{变量}}）将数据渲染到dom系统里面去
+    // console.log(Vue)
+    new Vue({
+      el:'#app',
+      data:{
+        count:0
+      }
+    })
+  </script>
+</body>
+</html>
