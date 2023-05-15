@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul{
+      padding:10px;
+      background: pink;
+    }
+    li{
+      padding: 5px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  
+
+  <div id="app">
+    <button @click.once="count++">点击-{{count}}</button>
+    <ul @click.self="clickUl">
+      <li @click="clickLi(1,2,$event)">li.........</li>
+    </ul>
+    <a href="http://www.baidu.com" @click.prevent="clickme">点我</a>
+  
+    <input type="text" @keyup.enter="up">
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      vue中通过v-on:click的方式进行事件绑定       简写为@click  (@dblclick @keyup  @mouseover)
+      vue中可以通过$event传递事件对象
+
+      事件修饰符：
+        @click.stop   阻止事件冒泡
+        @click.self   只有事件从元素本身发出来的才会触发
+        @click.once   只会触发一次
+        @click.prevent 取消默认行为
+
+      键盘修饰符：
+        @keyup.enter  敲击回车键的时候触发
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){ 
+        return {
+         count:0
+        }
+      },
+      methods:{
+        up(e){
+          console.log(e.target.value)
+        },
+        clickme(){
+          alert(1)
+        },
+        clickUl(){
+          console.log('ul被点击了o...')
+        },
+        clickLi(a,b,c){
+          console.log('li被点击了哦...')
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
