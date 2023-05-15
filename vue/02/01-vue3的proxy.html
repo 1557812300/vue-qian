@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <button @click="user.age=18">{{ user }}</button>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    // const {createApp} = Vue
+    // const app = createApp({
+    //   data(){ // 就是用来声明变量的地方
+    //     return {
+    //       count:0,
+    //       user:{
+    //         username:'张三'
+    //       }
+    //     }
+    //   },
+    //   mounted(){
+    //     console.log('user------>',this.user)
+    //   }
+    // })
+    // app.mount('#app')
+
+
+    // vue3底层的实现原理
+    // const target = {
+    //   a:'aaa',
+    //   b:'bbb'
+    // }
+    // const proxy = new Proxy(target,{
+    //   get(target,key,receiver){
+    //     // console.log('get方法执行了哦...',target,key,receiver)
+    //     return Reflect.get(target,key,receiver)
+    //   },
+    //   set(target,key,value,receiver){
+    //     // console.log('set方法执行了o...',target,key,value,receiver)
+    //     Reflect.set(target,key,value,receiver)
+    //     // 调用渲染视图界面的方法 
+    //   },
+    //   deleteProperty(target,key){
+    //     console.log('删除方法执行了o...',target,key)
+    //     Reflect.deleteProperty(target,key)
+    //     return true
+    //   }
+    // })
+    // proxy.a = 'aaaa'
+    // proxy.c = 'ccc'
+    // console.log(delete proxy.a)  // 删除代理对象的属性a
+    // console.log(proxy)
+  </script>
+</body>
+</html>

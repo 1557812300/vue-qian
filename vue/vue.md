@@ -271,7 +271,7 @@ const proxy = new Proxy(target,{
 console.log(proxy.a) //获取
 proxy.a = 'aaaa'     //设置
 proxy.c = 'cccc'     //增加一个额外的c属性
-delete proxy.a       //删除a
+delete proxy.a       //删除代理对象的属性a
 
 console.log(target)
 ```
