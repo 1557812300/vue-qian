@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  
+
+  <div id="app" v-cloak>
+    <h2>{{count}}</h2>
+    <h2 v-text="count"></h2>
+    <h2 v-html="count"></h2>
+    <button>{{count}}</button>
+    <hr/>
+    <h2>{{ count>3?'大于':'小于' }}</h2>
+    <h2>{{ 'zhangsan'.substr(0,3) }}</h2>
+    <h2 v-pre>今天学习了插值表达式 --- {{ count+1 }}</h2>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+
+    /*
+      vue指令：
+        v-cloak指令：用于隐藏尚未完成编辑的DOM模板，配合css样式实现
+        v-text指令与{{ }}效果是等价的，不会去进行标签的解析
+        v-html指令会进行标签的解析
+        v-pre指令跳过该元素及其所有子元素的编译。
+    */
+
+    const {createApp} = Vue
+    const app = createApp({
+      data(){ // 就是用来声明变量的地方
+        return {
+          count:0,
+        }
+      },
+    })
+    app.mount('#app')
+    </script>
+</body>
+</html>
