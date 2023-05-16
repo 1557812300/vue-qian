@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <!--调用hello组件-->
+    <hello></hello>
+  </div>
+
+
+  <div id="app2">
+    <!--调用hello组件，局部如果没有注册就会报错！-->
+    <hello></hello>
+  </div>
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.8/vue.js"></script>
+  <script>
+    // vue2的组件注册
+    
+    // vue2的全局组件的注册
+    // Vue.component('hello',{
+    //   template:'<h1>hello组件</h1>'
+    // })
+
+    new Vue({
+      el:'#app',
+      components:{ // 局部组件的注册
+        hello:{
+          template:'<h1>hello组件</h1>'
+        }
+      }
+    })
+
+    new Vue({
+      el:'#app2',
+    })
+  </script>
+</body>
+</html>

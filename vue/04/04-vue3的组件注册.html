@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <hello></hello>
+  </div>
+
+  <!--组件的模板结构-->
+  <template id="hello">
+    <div>
+      <h2>我是hello组件</h2>
+      <span>span......</span>
+    </div>
+  </template>
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    const {createApp} = Vue
+    const app = createApp({
+      components:{ // 局部组件的注册
+        hello:{
+          template:'#hello'  // 关联组件的模板结构
+        }
+      },
+    })
+    
+    // vue3中全局注册组件
+    // app.component('hello',{
+    //   template:'<h1>hello</h1>'
+    // })
+
+    // 一定放在最后面
+    app.mount('#app')
+  </script>
+</body>
+</html>
