@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <!-- <div id="dom">1</div> -->
+
+  <div id="abc">
+    <p>2</p>
+    <ul class="list-group"></ul>
+  </div>
+
+  <script>
+
+    /*
+      vue中引入了虚拟dom的思想，所谓的虚拟dom就是真实dom的一层映射，并且是js的内存对象。
+      jquery的库是频繁的操作真实dom节点，如果频繁琐碎的操作真实dom节点的话，性能销毁是比较差的。
+      vue的内部是操作的虚拟dom。
+    */
+
+    // 1. 内存中创建一颗虚拟dom树
+    // const vDom = {
+    //   tag:'div',
+    //   attr:{id:'abc'},
+    //   children:[
+    //     {tag:'p',attr:null,content:2},
+    //     {tag:'ul',attr:{className:'list-group'}},
+    //   ]
+    // }
+
+
+    // 2.将内存中的虚拟dom对象做一个初始化的渲染操作，渲染成浏览器可以识别的真实dom树
+
+    // 3. 当我们修改了vue实例组件的数据的时候
+    // this.arr.push('<li>1111</li>')
+
+
+    // 4. 将之前的虚拟dom树结合修改的数据，生成一颗全新的虚拟dom树
+    const newVDom = {
+      tag:'div',
+      attr:{id:'abc'},
+      children:[
+        {tag:'p',attr:null,content:2},
+        {tag:'ul',attr:{className:'list-group'},children:[
+          {tag:'li',attr:null,content:'1111'}
+        ]},
+      ]
+    }
+
+
+    // 5. 将生成好的新的虚拟dom树与上一次的虚拟dom树，两者进行diff算法的对比，算出patch差异部分
+
+    // 6 将对比出来的patch差异部分去更新真实dom树，界面更新了
+
+
+    // 大约1ms左右
+    // console.time('temp')
+    // let myDom = document.querySelector('#dom')
+    // let num = 1
+    // for(let i=0;i<10000;i++){
+    //   num++
+    // }
+    // myDom.innerHTML = num
+    // console.timeEnd('temp')
+
+    // 60ms左右
+    // console.time('temp')
+    // let myDom = document.querySelector('#dom')
+    // for(let i=0;i<10000;i++){
+    //   let value = myDom.innerHTML
+    //   myDom.innerHTML = ++value
+    // }
+    // console.timeEnd('temp')
+  </script>
+</body>
+</html>
