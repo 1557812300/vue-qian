@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <!-- <h1>app -- {{msg}}</h1> -->
+    <!--调用hello组件-->
+    <hello></hello>
+    <hello></hello>
+    <hello></hello>
+  </div>
+
+  <!--组件的模板结构-->
+  <template id="hello">
+    <div>
+      <h2 @click="msg=100">我是hello组件--{{msg}}</h2>
+    </div>
+  </template>
+
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      app的实例当中，只能访问自己的msg数据，不能访问孩子hello组件的msg数据。
+      hello组件模板中，只能访问自己的msg数据，不能访问父组件app的msg数据。
+      
+      为什么组件中的data选项不能直接写成对象的形式呢？
+        一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝
+        如果data是对象的话，所有的组件都会共享这一份内存地址的数据，如果有一个组件对其进行更改了，其它组件也会受到影响
+      
+    */
+    const {createApp} = Vue
+    // let json = {msg:'hello组件自己的数据...'}
+    const app = createApp({
+      data(){
+        return {
+          msg:'app实例的数据...'
+        }
+      },
+      components:{ // 局部组件的注册
+        hello:{
+          template:'#hello',// 关联组件的模板结构
+          data(){
+            return {
+              msg:'hello组件自己的数据...'
+            }
+          }
+        }
+      },
+    })
+
+    // 一定放在最后面
+    app.mount('#app')
+  </script>
+</body>
+</html>
