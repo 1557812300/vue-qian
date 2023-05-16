@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <ul>
+      <li v-for="item in arr">{{item}}</li>
+    </ul>
+    <button @click="clickArr">更改数据</button>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.8/vue.js"></script>
+  <script>
+    /*
+      Vue 能够侦听响应式数组的变更方法，并在它们被调用时触发相关的更新。这些变更方法包括：
+      push()
+      pop()
+      shift()
+      unshift()
+      splice()
+      sort()
+      reverse()
+
+      请问：slice/concat/filter这几个是不是数组的更新变异方法？ 不是
+      请问：Object.defineProperty的缺陷？ $set/$delete去更新界面
+        不能检测对象的新增属性的添加与删除
+        数组的某些操作也不会触发视图更新
+    */
+
+    const vm = new Vue({
+      el:'#app',
+      data:{
+        arr:['a','b','c']
+      },
+      methods:{
+        clickArr(){
+          // this.arr[0] = 'aaa'  界面不会更新
+          // this.arr.splice(0,1,'aaa')  解决方案可以调用数组的更新变异方法splice解决
+          // this.$set(this.arr,0,'aaa') 解决方案可以采用$set方法实现
+
+          // this.arr.length = 2  界面不会更新
+          // this.arr.splice(2)  解决方案可以调用数组更新变异splice方法
+
+          // delete this.arr[0]  界面不会更新
+          // this.$delete(this.arr,0) 解决方案可以采用$delete方法
+        
+        }
+      }
+    })
+  </script>
+</body>
+</html>
