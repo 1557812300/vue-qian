@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <h2>{{msg}}</h2>
+    <input type="text" v-model.trim="msg">
+
+
+    <!-- v-model指令用在表单元素上的实现原理 -->
+    <!-- <input type="text" :value="msg" @input="msg=$event.target.value"> -->
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      v-model指令可以用在表单元素（input/checkbox/select/textarea等）|组件上面。
+      
+      请你说一下，v-model的指令的实现原理？
+        绑定了value属性，与监听了input事件
+
+      v-model的三个修饰符
+        v-model.lazy: 
+          默认情况下，v-model 会在每次 input 事件后更新数据 (IME 拼字阶段的状态例外)。
+          你可以添加 lazy 修饰符来改为在每次 change 事件后更新数据：
+
+        v-model.number:
+          如果该值无法被 parseFloat() 处理，那么将返回原始值。
+
+        v-model.trim:
+          如果你想要默认自动去除用户输入内容中两端的空格
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){ 
+        return {
+          msg:'hello'
+        }
+      },
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
