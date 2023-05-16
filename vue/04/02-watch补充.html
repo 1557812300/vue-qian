@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <h3 @click="count++" id="count">{{count}}</h3>
+    <h3 @click="user.name+='!'">{{user}}</h3>
+    <hr/>
+    <button @click="startWatch">手动开启对于user的监听</button>
+    <button @click="stopWatch">手动关闭对于user的监听</button>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      watch可以监听现有的数据的改变，当数据发生改变了，可以做一些相关的业务逻辑处理。
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){ 
+        return {
+          count:0,
+          user:{
+            name:'zhangsan'
+          }
+        }
+      },
+      methods:{
+        stopWatch(){
+          this.unwatch()  // 关闭监听器的检测
+        },
+        startWatch(){
+          this.unwatch = this.$watch('user.name',newVal=>{
+            console.log('user.name最新值---->',newVal)
+          })
+
+          // 如果检测对象的话，第三个参数需要开启深度监听
+          // this.$watch('user',newVal=>{
+          //   console.log('count最新值---->',newVal)
+          // },{deep:true})
+        }
+      },
+      watch:{
+        // count(val){
+        //   console.log('改变后的count值---->',val)
+        // }
+
+        count:{
+          // immediate:true, // 初始化的时候监听一次
+          flush: 'post', // 在handler中获取真实dom的内容，就会是最新的值
+          handler(val){
+            console.log('改变后的count值---->',val,document.querySelector('#count').innerHTML)
+          }
+        }
+
+        // user:{  // watch如果检测的是引用类型，如果修改了对象的值了，地址没变，就不会触发handler
+        //   immediate:true,
+        //   deep:true,  // 开启深度监听 （当对象的属性发生改变了，handler函数也会触发执行）
+        //   handler(val){
+        //     console.log('user改变了哦...')
+        //   }
+        // }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <h2>{{fullname}} - {{watchFullname}}</h2>
+    <input type="text" v-model="firstname">
+    <input type="text" v-model="lastname">
+
+
+    <h2>{{num}}</h2>
+    <button @click="num++">增加</button>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      watch可以监听现有的数据的改变，当数据发生改变了，可以做一些相关的业务逻辑处理。
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){ 
+        return {
+          num:1,
+          firstname:'zhang',
+          lastname:'san',
+          watchFullname:''
+        }
+      },
+      computed:{
+        fullname(){
+          return this.firstname+'-'+this.lastname
+        }
+      },
+      watch:{ // 当数据改变了，如果需要做异步操作的时候，可以采用watch实现。计算属性只能做同步的操作
+        num(newValue,oldValue){  // 当num改变了,就会触发
+          setTimeout(() => {
+            console.log(newValue,oldValue)
+          }, 1000);
+        },
+        firstname(newValue){ // 只有当firstname改变了，才会进来执行
+          this.watchFullname = newValue + this.lastname 
+        },
+        lastname(newValue){ // 只有当lastname改变了，才会进来执行
+          this.watchFullname = this.firstname + newValue
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
