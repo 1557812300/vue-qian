@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    {{fullname}}
+    <button @click="change">修改</button>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      千万不要在vue的template模板中调用方法！ 因为如果用到了其它的数据，当其它数据改变的时候，就会让
+      模板更新，一更新一次，方法就出触发一次。效率太差，影响性能。
+
+      computed计算属性
+        计算属性内部只会跟他依赖的数据建立缓存关系，只有当count改变了，才会重新计算，别的数据改变不会再次触发了。
+
+        默认是只读的get，也可以set
+    
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){ 
+        return {
+          firstname:'张',
+          lastname:'三',
+        }
+      },
+      computed:{ // 计算属性
+        // fullname(){ // 只能获取
+        //   return this.firstname+' '+this.lastname
+        // }
+
+        fullname:{
+          get(){
+            return this.firstname+' '+this.lastname
+          },
+          set(val){
+            // this.firstname = val.split(' ')[0]
+            // this.lastname = val.split(' ')[1]
+
+            [this.firstname,this.lastname] = val.split(' ') // ['李','四']
+          }
+        }
+      },
+      methods:{
+        change(){
+          this.fullname = '李 四' // 修改计算属性
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
