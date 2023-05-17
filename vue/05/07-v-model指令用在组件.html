@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <!-- {{msg}} -->
+    <!-- <input type="text" v-model="msg"> -->
+    <!-- <input type="text" :value="msg" @input="msg=$event.target.value"> -->
+  
+    <h1>{{msg}}</h1>
+    <!-- <child :model-value="msg"  @update:modelValue="val=>msg=val"></child> -->
+    <child v-model="msg"></child>
+  </div>
+
+  <!--定义child组件模板-->
+  <template id="child">
+    <div class="child">  
+      <input type="text" :value="modelValue">
+      <button @click="$emit('update:modelValue','改变了哦')">更改数据</button>
+    </div>
+  </template>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /* 
+      v-model指令用在表单元素上： 绑定了value属性与监听了input事件
+      v-model指令用在组件上面，绑定了modelValue属性与监听了update:modelValue事件
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          msg:'app' 
+        }
+      },
+      components:{
+        child:{
+          template:'#child',
+          props:['modelValue'], // 传递的属性名
+          emits:['update:modelValue'] // 需要触发的事件名
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

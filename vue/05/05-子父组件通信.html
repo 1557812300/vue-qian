@@ -12,7 +12,7 @@
   <div id="app">
     <h1>{{msg}}</h1>
     <!--3. 父组件调用子组件的时候，给其绑定一个自定义的事件-->
-    <child @change="changeMsg"></child>
+    <child @change="val=>msg=val"></child>
   </div>
 
   <!--定义child组件模板-->
