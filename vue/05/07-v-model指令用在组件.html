@@ -15,14 +15,14 @@
     <!-- <input type="text" :value="msg" @input="msg=$event.target.value"> -->
   
     <h1>{{msg}}</h1>
-    <!-- <child :model-value="msg"  @update:modelValue="val=>msg=val"></child> -->
+    <!-- <child :modelValue="msg"  @update:modelValue="val=>msg=val"></child> -->
     <child v-model="msg"></child>
   </div>
 
   <!--定义child组件模板-->
   <template id="child">
     <div class="child">  
-      <input type="text" :value="modelValue">
+      <input type="text" :value="modelValue">  
       <button @click="$emit('update:modelValue','改变了哦')">更改数据</button>
     </div>
   </template>

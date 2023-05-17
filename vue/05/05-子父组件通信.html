@@ -12,14 +12,14 @@
   <div id="app">
     <h1>{{msg}}</h1>
     <!--3. 父组件调用子组件的时候，给其绑定一个自定义的事件-->
-    <child @change="val=>msg=val"></child>
+    <child @change="val=>msg=val"></child>  
   </div>
 
   <!--定义child组件模板-->
   <template id="child">
     <div class="chld">  
-      <p @click="sayFather">我是child组件...{{cmsg}}</p>
-      <!-- <p @click="$emit('change',cmsg)">我是child组件...{{cmsg}}</p> -->
+      <!-- <p @click="sayFather">我是child组件...{{cmsg}}</p> -->
+      <p @click="$emit('change',cmsg)">我是child组件...{{cmsg}}</p>
     </div>
   </template>
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <button ref="button" @click="get">获取child的数据...</button>
+    <child ref="child"></child>
+  </div>
+  <template id="child">
+    <div>child...</div>
+  </template>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      可以借助ref进行子组件或者自身dom的元素的标记。
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+        }
+      },
+      methods:{
+        get(){
+          // console.log(this.$refs.child.cmsg) // 通过ref获取child实例，再去拿child的自己的数据cmsg
+          this.$refs.child.a()  // 调用child组件的a方法
+          this.$refs.button.style.background = 'yellow'
+        }
+      },
+      components:{
+        child:{
+          template:'#child',
+          data(){return {cmsg:'child....'}},
+          methods:{
+            a(){
+              console.log('a方法执行了o...')
+            }
+          }
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

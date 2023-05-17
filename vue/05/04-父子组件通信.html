@@ -12,12 +12,12 @@
   <div id="app">
     <h1>{{msg}}</h1>
     <!--调用child子组件,可以将属性msg进行向下传递-->
-    <child :msg="msg" :count="count" :user="user"></child>
+    <child :msg="msg" :count="100"></child>
   </div>
   <!--定义child组件模板-->
   <template id="child">
     <div class="chld">  
-      <p>我是child组件....{{msg}}...{{count}}...{{user}}</p>
+      <p>我是child组件....{{msg}}</p>
     </div>
   </template>
 
@@ -49,8 +49,7 @@
               type:String
             },
             count:{
-              type:[Number,String],
-              // required:true,
+              type:[Number],
               default:100
             },
             user:{
