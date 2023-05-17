@@ -18,9 +18,7 @@
 
   <!--组件的模板结构-->
   <template id="hello">
-    <div>
-      <h2 @click="msg=100">我是hello组件--{{msg}}</h2>
-    </div>
+    <h2 @click="msg=100">{{msg}}</h2>
   </template>
 
 
@@ -48,7 +46,7 @@
           template:'#hello',// 关联组件的模板结构
           data(){
             return {
-              msg:'hello组件自己的数据...'
+              msg:1
             }
           }
         }

@@ -41,12 +41,14 @@
 
         fullname:{
           get(){
+            console.log('get--->')
             return this.firstname+' '+this.lastname
           },
           set(val){
             // this.firstname = val.split(' ')[0]
             // this.lastname = val.split(' ')[1]
 
+            // console.log('val----->',val)
             [this.firstname,this.lastname] = val.split(' ') // ['李','四']
           }
         }

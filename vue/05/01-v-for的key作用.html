@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <button  @click="add">添加水果</button>
+    <ul>
+      <li v-for="(item,index) in arr" :key="item.id">
+        <input type="checkbox">
+        <span>{{item.name}}</span>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      v-for中的key尽量用唯一的id字段，用index确保数组的数据下标不变。
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          arr:[{name:'苹果',id:1},{name:'香蕉',id:2},{name:'橘子',id:3}]
+        }
+      },
+      methods:{
+        add(){
+          this.arr.unshift({name:'核桃',id:4})
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

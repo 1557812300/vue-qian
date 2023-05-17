@@ -30,8 +30,8 @@
         console.log(this.count)
       } 
     })
-    app.mount('#app')
-    // console.log('app-------->',Vue)
+    const vm = app.mount('#app')
+    console.log('vm--->',vm.count)
   </script>
 </body>
 </html>

@@ -33,30 +33,31 @@
 
 
     // vue3底层的实现原理
-    // const target = {
-    //   a:'aaa',
-    //   b:'bbb'
-    // }
-    // const proxy = new Proxy(target,{
-    //   get(target,key,receiver){
-    //     // console.log('get方法执行了哦...',target,key,receiver)
-    //     return Reflect.get(target,key,receiver)
-    //   },
-    //   set(target,key,value,receiver){
-    //     // console.log('set方法执行了o...',target,key,value,receiver)
-    //     Reflect.set(target,key,value,receiver)
-    //     // 调用渲染视图界面的方法 
-    //   },
-    //   deleteProperty(target,key){
-    //     console.log('删除方法执行了o...',target,key)
-    //     Reflect.deleteProperty(target,key)
-    //     return true
-    //   }
-    // })
-    // proxy.a = 'aaaa'
-    // proxy.c = 'ccc'
-    // console.log(delete proxy.a)  // 删除代理对象的属性a
-    // console.log(proxy)
+    const target = {
+      a:'aaa',
+      b:'bbb'
+    }
+    const proxy = new Proxy(target,{
+      // 如果想要获取proxy对象的key所对应的value值
+      get(target,key,receiver){
+        // console.log('get方法执行了哦...',target,key,receiver)
+        return Reflect.get(target,key,receiver)
+      },
+      set(target,key,value,receiver){
+        // console.log('set方法执行了o...',target,key,value,receiver)
+        Reflect.set(target,key,value,receiver)
+        // 调用渲染视图界面的方法 
+      },
+      deleteProperty(target,key){
+        console.log('删除方法执行了o...',target,key)
+        Reflect.deleteProperty(target,key)
+        return true
+      }
+    })
+    proxy.a = 'aaaa'
+    proxy.c = 'ccc'
+    console.log(delete proxy.a)  // 删除代理对象的属性a
+    console.log(proxy)
   </script>
 </body>
 </html>

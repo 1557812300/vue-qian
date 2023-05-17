@@ -10,45 +10,36 @@
   
 
   <div id="app">
-    <input type="text" v-model="firstname">
-    <button @click="count++">count的2倍</button>
-    <!-- <h2>{{getDoubleCount()}}</h2>
-    <h2>{{getDoubleCount()}}</h2>
-    <h2>{{getDoubleCount()}}</h2> -->
-    <hr/>
-    <h2>{{computedCount}}</h2>
-    <h2>{{computedCount}}</h2>
-    <h2>{{computedCount}}</h2>
+    <button @click="name+='!'">更改name</button>
+    <input type="text" v-model="msg">
+    {{ substrComputed }}
   </div>
 
   <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
   <script>
     /*
-      千万不要在vue的template模板中调用方法！ 因为如果用到了其它的数据，当其它数据改变的时候，就会让
-      模板更新，一更新一次，方法就出触发一次。效率太差，影响性能。
+      缓存到内存中。
+        当name依赖项改变了，就会进入计算属性中，重新计算，返回最新的截图的内容
+        当无关的数据msg改变了，计算属性是不会重新计算的，直接从上一次缓存的结果中取值使用。
 
-      computed计算属性
-        计算属性内部只会跟他依赖的数据建立缓存关系，只有当count改变了，才会重新计算，别的数据改变不会再次触发了。
     */
     const {createApp} = Vue
     const app = createApp({
       data(){ 
         return {
-          firstname:'张',
-          lastname:'三',
-          count:0
+          msg:'xxx',
+          name:'hello'
         }
       },
       computed:{ // 计算属性
-        computedCount(){
-          console.log('computedCount...')
-          return this.count*2
-        }
+       substrComputed(){
+        console.log('1111111111')
+        return this.name.substr(0,3)
+       }
       },
       methods:{
-        getDoubleCount(){  // 30业务 递归业务
-          console.log('getDoubleCount')
-          return this.count*2
+        substrMethod(word){
+          return word.substr(0,3)
         }
       }
     })
