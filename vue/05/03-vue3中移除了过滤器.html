@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <h2>{{ computedSex }}</h2>
+    <h2>{{ computedPrice('$') }}</h2>
+  </div>
+
+  <!--引入线上的vue地址-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      vue3中移出了vue2的filter过滤器，借助computed实现
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          sex:1,
+          price:100
+        }
+      },
+      computed:{
+        computedSex(){
+          return this.sex === 1 ? '男' : '女'
+        },
+        computedPrice(){
+          return (params)=>{
+            return params+this.price
+          }
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
