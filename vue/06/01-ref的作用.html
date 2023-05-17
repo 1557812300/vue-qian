@@ -14,7 +14,7 @@
     <child ref="child"></child>
   </div>
   <template id="child">
-    <div>child...</div>
+    <div>child...{{$root.msg}}</div>
   </template>
 
   <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
@@ -26,6 +26,7 @@
     const app = createApp({
       data(){
         return {
+          msg:'app..'
         }
       },
       methods:{

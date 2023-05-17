@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <brother></brother>
+    <hr/>
+    <little></little>
+  </div>
+
+  <template id="brother">
+    <div id="brother">
+      <p>我是哥哥</p>
+      <p><button @click="hitLittle">打弟弟</button></p>
+    </div>
+  </template>
+  <template id="little">
+    <div id="little">
+      <p>我是弟弟 -  <span v-show="isShow">呜呜呜呜呜呜</span></p>
+    </div>
+  </template>
+ 
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.8/vue.js"></script>
+  <script>
+    /*
+      在vue2中，可以借助event-bus（事件总线)的方式实现兄弟组件通信
+
+      vue3可以借助mitt插件实现vue2的event-bus的效果
+      https://blog.csdn.net/qq_52013792/article/details/125803290
+    */
+    let bus = new Vue() // 创建一个bus实例
+    new Vue({
+      el:'#app',
+      components:{
+        brother:{
+          template:'#brother',
+          methods:{
+            hitLittle(){
+              // 触发打弟弟
+              bus.$emit('hit')  // 3. 触发bus上面绑定好的自定义事件
+              bus.$emit('aichuai','踹')
+            }
+          }
+        },
+        little:{
+          template:'#little',
+          data(){
+            return {
+              isShow:false
+            }
+          },
+          created(){
+            bus.$on('hit',()=>{  // 2. 在公共的bus实例上面绑定自定义事件，等待被触发
+              this.isShow = true
+            })
+            bus.$on('aichuai',(val)=>{
+              console.log('弟弟被踹了...',val)
+            })
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
