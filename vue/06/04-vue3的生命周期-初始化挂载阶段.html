@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <h2 id="h2dom">{{msg}}</h2>
+  </div>
+  
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      vue3的生命周期：
+        主要包含三个阶段： 初始化挂载阶段  更新阶段  销毁阶段
+        初始化挂载阶段钩子函数： 
+          beforeCreate
+          created
+          beforeMount
+          mounted
+
+        更新阶段钩子函数：
+          beforeUpdate
+          updated
+
+        销毁卸载阶段钩子函数：
+          beforeUnmount
+          unmounted
+    */
+    const {createApp} = Vue
+    const app = createApp({
+        data(){
+          return {
+            msg:'app'
+          }
+        },
+        // 数据是访问不到的，真实dom也不存在
+        beforeCreate(){
+          console.log('beforeCreate...',this.msg,document.querySelector('#h2dom'))
+        },
+        // 数据可以访问到，真实dom访问不到真实dom节点
+        // 异步请求接口数据，进行msg的赋值操作 
+        created(){
+          console.log('created...',this.msg,document.querySelector('#h2dom'))
+        },
+        // 将组件的template模板进行编译，编译成虚拟dom对象，即将要编译好的虚拟dom对象渲染成真实dom h2节点
+        beforeMount(){
+          console.log('beforeMount...',this.msg,document.querySelector('#h2dom'))
+        },
+        mounted(){
+          console.log('mounted...',this.msg,document.querySelector('#h2dom'))
+        }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

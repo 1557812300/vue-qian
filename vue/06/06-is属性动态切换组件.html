@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <button @click="type='home'">切换home组件</button>
+    <button @click="type='card'">切换card组件</button>
+    <keep-alive include="home">
+      <component :is="type"></component>
+    </keep-alive>
+
+    <!-- 条件为真的时候，渲染成a标签，否则渲染成span标签 -->
+    <!-- <component :is="flag?'a':'span'">默认的内容</component> -->
+  </div>
+  
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+     可以借助:is='变量'的形式动态的进行组件的切换
+     将动态组件放入到keep-alive标签中，那么组件就不会被销毁，会进行缓存。created只会走一次，销毁不会执行了。
+     就可以在activated钩子函数中进行初始化的事件绑定，在deactivated中进行事件销毁操作
+
+     默认keep-alive缓存所有的组件，只有组件被缓存了，才会有activated、deactivated
+     可以通过include属性指明到底缓存哪几个组件
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          type:'home',
+          flag:false
+        }
+      },
+      components:{
+        home:{
+          name:'home',
+          template:'<div>home...</div>',
+          // created(){
+          //   console.log('home-created...')
+          // },
+          // beforeUnmount(){
+          //   console.log('home-beforeUnmount')
+          // }
+
+
+          activated() {
+            // 在首次挂载、以及每次从缓存中被重新插入的时候调用
+            console.log('home-activated')
+          },
+          deactivated() {
+            // 在从 DOM 上移除、进入缓存以及组件卸载时调用
+            console.log('home-deactivated')
+          }
+        },
+        card:{
+          name:'card',
+          template:'<div>card...</div>',
+          activated() {
+            // 在首次挂载、以及每次从缓存中被重新插入的时候调用
+            console.log('card-activated')
+          },
+          deactivated() {
+            // 在从 DOM 上移除、进入缓存以及组件卸载时调用
+            console.log('card-deactivated')
+          }
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

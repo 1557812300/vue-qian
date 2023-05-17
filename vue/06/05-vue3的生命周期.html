@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <button @click="destroy">卸载组件</button>
+    <h2 id="h2dom">{{msg}}</h2>
+  </div>
+  
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      vue3的生命周期：
+        主要包含三个阶段： 初始化挂载阶段  更新阶段  销毁阶段
+        初始化挂载阶段钩子函数： 
+          beforeCreate
+          created
+          beforeMount
+          mounted
+
+        更新阶段钩子函数：
+          beforeUpdate
+          updated
+
+        销毁卸载阶段钩子函数：
+          beforeUnmount
+          unmounted
+    */
+    const {createApp} = Vue
+    const app = createApp({
+        data(){
+          return {
+            msg:'app'
+          }
+        },
+        methods:{
+          destroy(){
+            app.unmount()
+          }
+        },
+        // 数据是访问不到的，真实dom也不存在
+        beforeCreate(){
+          console.log('beforeCreate...',this.msg,document.querySelector('#h2dom'))
+        },
+        // 数据可以访问到，真实dom访问不到真实dom节点
+        // 异步请求接口数据，进行msg的赋值操作 
+        created(){
+          console.log('created...',this.msg,document.querySelector('#h2dom'))
+          // setTimeout(() => {
+          //   // 修改data里面的数据
+          //   this.msg = 'app修改了哦...'
+          // }, 2000);
+
+
+          this.timer = setInterval(()=>{
+            console.log('定时器开启了')
+            this.msg += '!'
+          },2000)
+        },
+        // 将组件的template模板进行编译，编译成虚拟dom对象，即将要编译好的虚拟dom对象渲染成真实dom h2节点
+        beforeMount(){
+          console.log('beforeMount...',this.msg,document.querySelector('#h2dom'))
+        },
+        mounted(){
+          console.log('mounted...',this.msg,document.querySelector('#h2dom'))
+        },
+        // mounted之后，数据改变了，立即执行beforeUpdated，真实dom里面的内容还是之前的数据
+        beforeUpdate(){
+          console.log('beforeUpdate...',this.msg,document.querySelector('#h2dom').innerHTML)
+        },
+        // 数据改变了，内部进行虚拟dom的diff算法，算出patch差异的部分，将差异的部分进行真实dom的渲染，渲染完成后，再去走updated
+        updated(){
+          console.log('updated...',this.msg,document.querySelector('#h2dom').innerHTML)
+        },
+        // 组件销毁之前，可以清除一些定时器相关的业务
+        beforeUnmount(){
+          console.log('beforeUnmount')
+          clearInterval(this.timer)
+        },
+        unmounted(){
+          console.log('unmounted...')
+        }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
