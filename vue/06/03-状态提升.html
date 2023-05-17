@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+  <div id="app">
+    <content :type="type"></content>
+    <footers @change="changeType"></footers>
+  </div>
+  
+  <!--定义content组件模板-->
+  <template id="content">
+    <div>我是content-{{type}}</div>
+  </template>
+
+  <!--定义footer组件模板-->
+  <template id="footer">
+    <div>
+      <ul>
+        <li @click="$emit('change','首页')">首页</li>
+        <li @click="$emit('change','分类')">分类</li>
+        <li @click="$emit('change','我的')">我的</li>
+      </ul>
+    </div>
+  </template>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      vue3中可以通过状态提升的方案实现兄弟组件通信。
+      将公共的状态提升到离他们最近的父组件中进行维护。
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          type:'首页'
+        }
+      },
+      methods:{
+        changeType(type){
+          this.type = type
+        }
+      },
+      components:{
+        content:{
+          template:'#content',
+          props:['type']
+        },
+        footers:{
+          template:'#footer'
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
