@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <table>
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>年龄</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr v-for="item in arr" :key="item.id">
+          <td>{{item.id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.age}}</td>
+        </tr> -->
+        <!--在表格中，直接放入home组件，不认识，拿到最上面进行渲染解析  并且可以给home组件传递arr属性-->
+        <!-- <home></home> -->
+        <!-- <component is="home"></component> -->
+        <!-- <tr is="home"></tr> -->
+        <tr is="vue:home" :arr="arr"></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <template id="home">
+    <tr v-for="item in arr" :key="item.id">
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.age}}</td>
+    </tr>
+  </template>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          arr:[
+            {id:1,name:'张三',age:18},
+            {id:2,name:'李四',age:28},
+            {id:3,name:'王五',age:38}
+          ]
+        }
+      },
+      components:{
+        home:{
+          template:'#home',
+          props:['arr']
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

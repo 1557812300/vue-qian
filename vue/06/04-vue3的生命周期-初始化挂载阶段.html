@@ -20,17 +20,17 @@
       vue3的生命周期：
         主要包含三个阶段： 初始化挂载阶段  更新阶段  销毁阶段
         初始化挂载阶段钩子函数： 
-          beforeCreate
-          created
-          beforeMount
-          mounted
+          beforeCreate  数据获取  真实dom也没有挂载
+          created       数据获取  没有挂载   绑定初始化的事件|异步请求  定时器开启
+          beforeMount   数据获取  没有挂载
+          mounted       数据获取  挂载完成   实例化插件 
 
         更新阶段钩子函数：
-          beforeUpdate
-          updated
+          beforeUpdate   真实dom里面渲染的数据内容还是之前的
+          updated        diff  patch  真实dom里面的内容就是更新之后的了
 
         销毁卸载阶段钩子函数：
-          beforeUnmount
+          beforeUnmount  清除定时器操作
           unmounted
     */
     const {createApp} = Vue

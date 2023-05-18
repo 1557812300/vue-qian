@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <fancy-button>
+      <template v-slot:header><span>哈哈哈</span></template>
+      <template #footer><span>嘻嘻嘻</span></template>
+      <template #default>
+        <div>其它的代码....</div>
+      </template>
+    </fancy-button>
+
+
+    <fancy-button></fancy-button>
+  </div>
+
+  <template id="fancyButton">
+    <div>
+      <slot name="header">默认的header</slot>
+      <button>默认按钮</button>
+      <slot name="footer">默认的footer</slot>
+      <!-- 不写name属性的时候，相当于写了name='default' 匿名插槽-->
+      <slot></slot>
+    </div>
+  </template>
+
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+
+    // 具名插槽： 需要在子组件模板中定义  <slot name='header'></slot>
+    // 父组件调用子组件的时候，需要指明插槽的名字，才可以将具体某一块的内容插入到子组件的具体位置当中。
+
+    // v-slot:footer -------> 简写为  #footer
+
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          
+        }
+      },
+      components:{
+        fancyButton:{
+          template:'#fancyButton'
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
