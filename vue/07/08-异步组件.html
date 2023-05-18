@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <test></test>
+    <hr/>
+    <suspense>
+      <!--加载异步组件-->
+      <async-test></async-test>
+      <!-- 在 #fallback 插槽中显示 “正在加载中” -->
+      <template #fallback>loading....</template>
+    </suspense>
+  </div>
+
+  <template id="test">
+    <div>test...</div>
+  </template>
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      可以借助：defineAsyncComponent 定义vue中的异步组件
+      并且可以配合suspense标签与template#fallback实现当异步组件未渲染出来之前的loading状态。
+    */
+    const {createApp,defineAsyncComponent} = Vue
+
+    // 定义vue的异步组件
+    const Test = {
+      template:'#test'
+    }
+    const asyncTest = defineAsyncComponent(()=>{
+      return new Promise((resolve)=>{
+        setTimeout(() => {
+          resolve(Test)
+        }, 3000);
+      })
+    })
+
+    const app = createApp({
+      data(){
+        return {
+        }
+      },
+      components:{
+        asyncTest, // 异步的组件
+        test:Test  // 之前的组件，上来就加载显示
+      }
+    })
+
+
+    app.config.unwrapInjectedRef = true
+
+    app.mount('#app')
+  </script>
+</body>
+</html>

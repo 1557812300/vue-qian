@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <parent :money="money"></parent>
+  </div>
+
+  <template id="parent">
+    <div>
+      我是parent - {{money}}
+      <child :money="money"></child>
+    </div>
+  </template>
+  <template id="child">
+    <div>
+      我是son-{{money}}
+    </div>
+  </template>
+  
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          money:100
+        }
+      },
+      components:{
+        parent:{
+          template:'#parent',
+          props:['money'],
+          components:{
+            child:{
+              template:'#child',
+              props:['money'],
+            }
+          }
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

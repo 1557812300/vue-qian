@@ -4244,6 +4244,7 @@ const AsyncComp = defineAsyncComponent(() => {
   const Com = {
     template: '#com'
   }
+  // 定义异步组件。规定了3s以后才会渲染
   const myCom = defineAsyncComponent(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -4254,8 +4255,8 @@ const AsyncComp = defineAsyncComponent(() => {
 
   createApp({
     components: {
-      myTest: Com,
-      myCom,
+      myTest: Com, 
+      myCom,  // 注册异步组件
     }
   }).mount('#app')
 </script>

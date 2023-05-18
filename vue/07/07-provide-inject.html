@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <button @click="money=1000">更改money-{{money}}</button>
+    <parent></parent>
+  </div>
+
+  <template id="parent">
+    <div>
+      我是parent 
+      <child></child>
+    </div>
+  </template>
+  <template id="child">
+    <div>
+      我是son -- {{money}} --- {{injectMoney}}
+    </div>
+  </template>
+  
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      provide-inject可以实现跨级别的组件通信。
+    */
+    const myInjectionKey = 'MONEY' // let a = 'abc'
+    const {createApp,computed} = Vue
+    const app = createApp({
+      data(){
+        return {
+          money:100
+        }
+      },
+      // provide:{
+      //   money:this.money // this获取不到money
+      // },
+      provide(){ // 这种写法才可以获取data选项中的money数据
+        return {
+          [myInjectionKey]:computed(()=>this.money) // 当修改了app的money->1000的时候，money才可以变成1000
+        }
+      },
+      components:{
+        parent:{
+          template:'#parent',
+          components:{
+            child:{
+              template:'#child',
+              data(){
+                return {
+                  money:10
+                }
+              },
+              // inject:['money'] // 获取provide提供的money数据了
+              inject:{ // 如果对于provide提供的数据名字与自己的名字冲突了，可以通过此方式解决。
+                injectMoney:{
+                  from:[myInjectionKey],
+                  default:1  // 如果没有provide提供者，就会有default
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+
+    app.config.unwrapInjectedRef = true
+
+    app.mount('#app')
+  </script>
+</body>
+</html>
