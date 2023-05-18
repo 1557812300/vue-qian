@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <button @click="changeType">切换</button>
+    <fancy-button>
+      <template v-slot:[type]>{{type}}</template>
+    </fancy-button>
+  </div>
+
+  
+  <template id="fancyButton">
+    <div>
+      <slot name="aaa">默认的1的位置</slot>
+      <slot name="bbb">默认的2的位置</slot>
+    </div>
+  </template>
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      动态插槽语法：
+        <template v-slot:[type]></template>
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      methods:{
+        changeType(){
+          this.type = this.type==='aaa'?'bbb':'aaa'
+        }
+      },
+      data(){
+        return {
+          type:'aaa'
+        }
+      },
+      components:{
+        fancyButton:{
+          template:'#fancyButton',
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

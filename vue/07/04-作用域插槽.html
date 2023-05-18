@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <fancy-button>
+      <template #default="{msg}">插入默认的内容-{{msg.substr(0,3)}}</template>
+    </fancy-button>
+
+    <fancy-button>
+      <template #default="{msg}">插入默认的内容-{{msg}}</template>
+    </fancy-button>
+  </div>
+
+  
+  <template id="fancyButton">
+    <div>
+      <slot :msg="msg" :a="100">默认值</slot>
+    </div>
+  </template>
+  
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      作用域插槽？
+        子组件的数据可以借助slot插槽向外暴露，让父组件可以访问到
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          
+        }
+      },
+      components:{
+        fancyButton:{
+          template:'#fancyButton',
+          data(){
+            return {
+              msg:'我是子组件的数据...'
+            }
+          }
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
