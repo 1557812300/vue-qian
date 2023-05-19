@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <!-- v-自定义指令名字 -->
+    <input type="text" v-focus>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    /*
+      自定义指令是可以操作底层dom元素的
+    */
+    const {createApp} = Vue
+    const app = createApp({
+      // directives:{ // 注册局部的自定义指令
+      //   focus:{
+      //     mounted(el){
+      //       // console.log(el)
+      //       el.focus()
+      //     }
+      //   }
+      // }
+    })
+
+    // 注册全局的自定义指令 v-focus
+    app.directive('focus',{
+      mounted(el){
+        el.focus()
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+</html>

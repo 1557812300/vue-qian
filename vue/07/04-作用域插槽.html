@@ -10,18 +10,14 @@
   
   <div id="app">
     <fancy-button>
-      <template #default="{msg}">插入默认的内容-{{msg.substr(0,3)}}</template>
-    </fancy-button>
-
-    <fancy-button>
-      <template #default="{msg}">插入默认的内容-{{msg}}</template>
+      <template #demo="{msg,a}">插入默认的内容-{{msg}}-{{a}}</template>
     </fancy-button>
   </div>
 
   
   <template id="fancyButton">
     <div>
-      <slot :msg="msg" :a="100">默认值</slot>
+      <slot name="demo" :msg="msg" :a="100">默认值</slot>
     </div>
   </template>
   

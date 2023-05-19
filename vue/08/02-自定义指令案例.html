@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="app">
+    <!--通过v-model指令关联value，只要用户在输入框中输入内容了，value变量跟着变化-->
+    <input type="text" v-tel="value" v-model="value">
+    <p>value --- {{value}}</p>
+    <hr/>
+    <div v-color="{color:color,a:'我是a'}">我是div</div>
+    <button @click="color='green'">更改color-{{color}}</button>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    const {createApp} = Vue
+    const app = createApp({
+      data(){return {value:'1',color:'pink'}},
+      directives:{
+        tel:{
+          // mounted(el,binding){
+          //   // console.log('el',el)
+          //   console.log('mounted',binding)
+          // }
+          updated(el,binding){
+            if(/^1[3-9]\d{9}$/.test(binding.value)){
+              el.style.color = 'green'
+            }else{
+              el.style.color = 'red'
+            }
+          }
+        },
+        // color:{
+        //   mounted(el,binding){
+        //     el.style.background = binding.value
+        //   },
+        //   updated(el,binding){
+        //     el.style.background = binding.value
+        //   }
+        // }
+        // mounted || updated的时候都会触发执行
+        color(el,binding){
+          el.style.background = binding.value.color
+        }
+      }
+    })
+
+    // v-tel
+
+    app.mount('#app')
+  </script>
+</body>
+</html>
