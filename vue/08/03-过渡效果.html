@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /*当元素显示的时候，才会走*/
+    /* .demo-enter-from{opacity: 0;transform:translateX(100px)}
+    .demo-enter-to{opacity: 1;transform:translateX(0px)}
+    .demo-enter-active{transition: all 3s;} */
+
+    /*当元素离开的时候，才会走*/
+    /* .demo-leave-from{opacity: 1;transform:translateX(0px)}
+    .demo-leave-to{opacity: 0;transform:translateX(100px)}
+    .demo-leave-active{transition: all 3s;} */
+
+    .demo-enter-active{
+      animation: bouce-in 3s;
+    }
+    .demo-leave-active{
+      animation: bouce-in 3s reverse;
+    }
+    @keyframes bouce-in{
+      0%{
+        transform: scale(0);
+      }
+      50%{
+        transform: scale(1.25);
+      }
+      100%{
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="app">
+    <button @click="isShow=!isShow">切换</button>
+    <transition name="demo">
+      <h1 v-show="isShow">我是h1标题</h1>
+    </transition>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          isShow:true
+      }},
+    })
+
+
+    app.mount('#app')
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- 引入animate.css动画库 -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.css" rel="stylesheet">
+  <style>
+    .box{
+      width:200px;
+      height:200px;
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="app">
+    <button @click="isShow=!isShow">切换</button>
+
+    <transition
+      enter-active-class="animate__animated animate__flip"
+      leave-active-class="animate__animated animate__bounceOutRight"
+      mode="out-in"
+    >
+      <div class="box" v-if="isShow"></div>
+      <div class="box" v-else></div>
+    </transition>
+
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          isShow:true
+      }}
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>

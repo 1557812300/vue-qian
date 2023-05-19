@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .demo-enter-from{opacity: 0;transform:translateX(100px)}
+    .demo-enter-to{opacity: 1;transform:translateX(0px)}
+    .demo-enter-active{transition: all 3s;}
+
+    .demo-leave-from{opacity: 1;transform:translateX(0px)}
+    .demo-leave-to{opacity: 0;transform:translateX(100px)}
+    .demo-leave-active{transition: all 3s;}
+  </style>
+</head>
+<body>
+  
+  <div id="app">
+    <button @click="isShow=!isShow">切换</button>
+
+
+    <!--
+      transition中可以借助v-if|else实现只渲染一个元素，但是多个元素同时进行动画的。
+      借助mode过渡模式解决。
+      appear属性就是一上来就要做过渡效果
+    -->
+    <transition appear name="demo" mode="out-in" @after-enter="onAfterEnter" @before-leave="onBeforeLeave">
+      <h1 v-if="isShow">我是h1标题-if</h1>
+      <h1 v-else>我是h1标题-else</h1>
+    </transition>
+
+    <!-- <transition name="demo">
+      <div v-show="isShow">
+        <h1>我是h1标题</h1>
+        <h1>我是h1标题</h1>
+      </div>
+    </transition> -->
+
+
+    <!--对于列表元素而言，可以采用transition-group标签的形式进行嵌套  可以借助tag属性指明外层包裹的标签-->
+    <!-- <transition-group name="demo" tag="div">
+      <h1 v-show="isShow" key="1">我是h1标题</h1>
+      <h1 v-show="isShow" key="2">我是h1标题</h1>
+    </transition-group> -->
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          isShow:true
+      }},
+      methods:{
+        onAfterEnter(el){
+          el.style.background = 'pink'
+        },
+        onBeforeLeave(el){
+          el.style.background = 'green'
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
