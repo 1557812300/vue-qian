@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+      <div ref="oDiv">{{count}}</div>
+      <button @click="add">更改</button>
+    </div>
+
+    <!--引入线上的vue地址-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.8/vue.js"></script>
+    <script>
+      /*
+        nextTick() 可以在状态改变后立即使用，以等待 DOM 更新完成。
+        你可以传递一个回调函数作为参数，或者 await 返回的 Promise。
+      */
+      new Vue({
+        el:'#app',
+        data:{
+          count:0
+        },
+        methods:{
+          add(){
+            this.count++
+            this.$nextTick(function(){
+              console.log(this.$refs.oDiv.innerHTML)
+            })
+          }
+        },
+        // updated(){
+        //   console.log(this.$refs.oDiv.innerHTML) // 数据改变了，但是真实dom里面用到的值还是之前的
+        // }
+      })
+    </script>
+</body>
+</html>

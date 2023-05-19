@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+      <button @click="addPro">动态添加新的属性</button>
+      <button @click="addData">数组修改数据</button>
+      <p>{{user}}</p>
+      <ul>
+        <li v-for="item in arr" :key="item">{{item}}</li>
+      </ul>
+    </div>
+
+    <!--引入线上的vue地址-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.8/vue.js"></script>
+    <script>
+      new Vue({
+        el:'#app',
+        data:{
+          user:{
+            name:'张三'
+          },
+          arr:['a','b']
+        },
+        methods:{
+          addPro(){
+            // this.$set(this.user,'age',18)
+            // this.user.age = 18
+            // this.$forceUpdate() // 强制更新
+          },
+          addData(){
+            // this.$set(this.arr,0,'aaa')
+            this.arr[0] = 'aaa'
+            this.$forceUpdate()
+          }
+        }
+      })
+    </script>
+</body>
+</html>
