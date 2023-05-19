@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .modal-container {
+      width: 300px;
+      margin: auto;
+      padding: 20px 30px;
+      background-color: #fff;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+      transition: all 0.3s ease;
+    }
+
+    .modal-enter-from {
+      opacity: 0;
+    }
+
+    .modal-leave-to {
+      opacity: 0;
+    }
+
+    .modal-enter-from .modal-container,
+    .modal-leave-to .modal-container {
+      transform: scale(2);
+    }
+
+    .modal-mask {
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      transition: opacity 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="app">
+    <button @click="show=true">打开弹窗</button>
+
+    <!--通过teleport传送门将modal组件放到body结束之前-->
+    <teleport to="body">
+      <modal :show="show" @close="close"></modal>
+    </teleport>
+  </div>
+
+  <!--定义弹出框的模板结构-->
+  <template id="modal">
+    <transition name="modal">
+      <div v-if="show"  class="modal-mask">
+        <div class="modal-container">
+          <p>我是弹窗</p>
+          <button @click="$emit('close')">关闭弹窗</button>
+        </div>
+      </div>
+    </transition>
+  </template>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+  <script>
+    const {createApp} = Vue
+    const app = createApp({
+      data(){
+        return {
+          show:false
+        }
+      },
+      methods:{
+        close(){this.show = false}
+      },
+      components:{
+        modal:{
+          template:'#modal',
+          props:['show'] // 需要接受app实例传递来的show属性
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+</html>
